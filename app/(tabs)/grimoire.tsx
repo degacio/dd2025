@@ -65,25 +65,77 @@ export default function GrimoireTab() {
 
   const loadData = async () => {
     try {
-      // Load spells data
-      const spellsData = require('@/data/spells.json');
-      setAllSpells(spellsData);
-
-      // Load characters
+      console.log('📚 Loading spells and characters data...');
+      
+      // Load spells data first
+      await loadSpellsData();
+      
+      // Then load characters
       await loadCharacters();
     } catch (error) {
-      console.error('Error loading data:', error);
+      console.error('💥 Error loading data:', error);
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
   };
 
+  const loadSpellsData = async () => {
+    try {
+      console.log('📖 Loading spells data...');
+      
+      // First try to load custom spells if available
+      let spellsData: Spell[] = [];
+      
+      if (Platform.OS === 'web') {
+        const storedSpells = localStorage.getItem('customSpells');
+        if (storedSpells) {
+          console.log('📚 Found custom spells in localStorage');
+          spellsData = JSON.parse(storedSpells);
+        }
+      }
+      
+      // If no custom spells, load the default ones
+      if (spellsData.length === 0) {
+        console.log('📚 Loading default spells from data/spells.json');
+        const defaultSpells = require('@/data/spells.json');
+        
+        // Check if we have the Livro do Jogador data
+        try {
+          const livroDoJogadorData = require('@/data/magias-livro-do-jogador.json');
+          console.log('📖 Found Livro do Jogador data, adapting spells...');
+          
+          const { adaptSpellsFromLivroDoJogador } = require('@/utils/spellAdapter');
+          const adaptedSpells = adaptSpellsFromLivroDoJogador(livroDoJogadorData);
+          
+          if (adaptedSpells && adaptedSpells.length > 0) {
+            console.log('✅ Successfully adapted spells from Livro do Jogador:', adaptedSpells.length);
+            spellsData = adaptedSpells;
+          } else {
+            console.log('⚠️ No adapted spells, using default spells');
+            spellsData = defaultSpells;
+          }
+        } catch (error) {
+          console.log('⚠️ Livro do Jogador data not available, using default spells');
+          spellsData = defaultSpells;
+        }
+      }
+      
+      console.log('📊 Total spells loaded:', spellsData.length);
+      setAllSpells(spellsData);
+    } catch (error) {
+      console.error('💥 Error loading spells data:', error);
+      setAllSpells([]);
+    }
+  };
+
   const loadCharacters = async () => {
     try {
+      console.log('👥 Loading characters...');
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
+        console.log('❌ No session found');
         setLoading(false);
         return;
       }
@@ -96,12 +148,17 @@ export default function GrimoireTab() {
 
       if (response.ok) {
         const charactersData = await response.json();
+        console.log('📊 Characters loaded:', charactersData.length);
+        
         // Filter only spellcasting characters
         const spellcasters = charactersData.filter((char: Character) => {
           const characterClass = classesData.find(cls => cls.name === char.class_name);
           return characterClass?.spellcasting;
         });
-        console.log('✅ Spellcasting characters loaded:', spellcasters.length);
+        
+        console.log('✨ Spellcasting characters found:', spellcasters.length);
+        console.log('📋 Spellcasters:', spellcasters.map(c => `${c.name} (${c.class_name})`));
+        
         setCharacters(spellcasters);
         
         // Update selected character if it exists in the new data
@@ -110,16 +167,20 @@ export default function GrimoireTab() {
             (char: Character) => char.id === selectedCharacter.character.id
           );
           if (updatedSelectedCharacter) {
+            console.log('🔄 Updating selected character with fresh data');
             const updatedCharacterSpells = prepareCharacterSpells(updatedSelectedCharacter);
             setSelectedCharacter(updatedCharacterSpells);
           } else {
             // Character was deleted or is no longer a spellcaster, close modal
+            console.log('❌ Selected character no longer exists, closing modal');
             setSelectedCharacter(null);
           }
         }
+      } else {
+        console.error('❌ Failed to load characters:', response.status);
       }
     } catch (error) {
-      console.error('Error loading characters:', error);
+      console.error('💥 Error loading characters:', error);
     }
   };
 
@@ -130,23 +191,61 @@ export default function GrimoireTab() {
   };
 
   const getSpellByName = (spellName: string): Spell | null => {
-    return allSpells.find(spell => spell.name === spellName) || null;
+    const spell = allSpells.find(spell => 
+      spell.name.toLowerCase().trim() === spellName.toLowerCase().trim()
+    );
+    
+    if (!spell) {
+      console.log(`⚠️ Spell not found: "${spellName}"`);
+      console.log('📚 Available spells sample:', allSpells.slice(0, 5).map(s => s.name));
+    }
+    
+    return spell || null;
   };
 
   const prepareCharacterSpells = (character: Character): CharacterSpells => {
+    console.log(`🧙 Preparing spells for character: ${character.name}`);
+    console.log('📊 Character spells_known:', character.spells_known);
+    
     const characterClass = classesData.find(cls => cls.name === character.class_name) || null;
     
     // Get character's known spells
     const knownSpellNames = character.spells_known || [];
     const spells: Spell[] = [];
     
-    knownSpellNames.forEach((spellData: any) => {
+    console.log(`📋 Processing ${knownSpellNames.length} known spells...`);
+    
+    knownSpellNames.forEach((spellData: any, index: number) => {
       const spellName = typeof spellData === 'string' ? spellData : spellData.name;
+      console.log(`🔍 Looking for spell ${index + 1}: "${spellName}"`);
+      
       const spell = getSpellByName(spellName);
       if (spell) {
+        console.log(`✅ Found spell: ${spell.name} (Level ${spell.level})`);
         spells.push(spell);
+      } else {
+        console.log(`❌ Spell not found: "${spellName}"`);
+        
+        // Create a placeholder spell if not found in database
+        const placeholderSpell: Spell = {
+          id: `placeholder-${index}`,
+          name: spellName,
+          school: 'Evocação',
+          level: typeof spellData === 'object' && spellData.level ? spellData.level : 1,
+          castingTime: 'Desconhecido',
+          range: 'Desconhecido',
+          components: 'Desconhecido',
+          duration: 'Desconhecido',
+          description: 'Magia não encontrada na base de dados.',
+          classes: [character.class_name],
+          source: 'Personalizado'
+        };
+        spells.push(placeholderSpell);
+        console.log(`📝 Created placeholder for: ${spellName}`);
       }
     });
+
+    console.log(`✅ Successfully processed ${spells.length} spells for ${character.name}`);
 
     // Group spells by level
     const spellsByLevel: Record<number, Spell[]> = {};
@@ -161,6 +260,10 @@ export default function GrimoireTab() {
     Object.keys(spellsByLevel).forEach(level => {
       spellsByLevel[parseInt(level)].sort((a, b) => a.name.localeCompare(b.name));
     });
+
+    console.log('📊 Spells by level:', Object.entries(spellsByLevel).map(([level, spells]) => 
+      `Level ${level}: ${spells.length} spells`
+    ));
 
     // Get spell slots information
     const spellSlots: SpellSlotInfo[] = [];
@@ -179,16 +282,25 @@ export default function GrimoireTab() {
     // Sort spell slots by level
     spellSlots.sort((a, b) => a.level - b.level);
 
-    return {
+    const result = {
       character,
       spells,
       spellsByLevel,
       spellSlots,
       characterClass
     };
+
+    console.log(`🎯 Character ${character.name} prepared:`, {
+      totalSpells: spells.length,
+      spellLevels: Object.keys(spellsByLevel),
+      spellSlots: spellSlots.length
+    });
+
+    return result;
   };
 
   const handleCharacterPress = (character: Character) => {
+    console.log(`🎯 Character selected: ${character.name}`);
     const characterSpells = prepareCharacterSpells(character);
     setSelectedCharacter(characterSpells);
   };
@@ -500,7 +612,7 @@ export default function GrimoireTab() {
 
                         <View style={styles.spellsList}>
                           {spellsAtLevel.map((spell, index) => (
-                            <View key={spell.id} style={styles.spellItem}>
+                            <View key={`${spell.id}-${index}`} style={styles.spellItem}>
                               <View style={styles.spellInfo}>
                                 <Text style={styles.spellName}>{spell.name}</Text>
                                 <Text style={styles.spellSchool}>{spell.school}</Text>
