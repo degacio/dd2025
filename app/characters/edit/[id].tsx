@@ -9,6 +9,7 @@ import {
   TextInput,
   Alert,
   Switch,
+  Platform,
 } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Character } from '@/types/database';
@@ -377,19 +378,24 @@ export default function EditCharacterScreen() {
         const updatedCharacter = await response.json();
         console.log('✅ Character saved successfully:', updatedCharacter.name);
         
-        Alert.alert(
-          'Sucesso', 
-          'Personagem atualizado com sucesso!', 
-          [
+        const message = 'Personagem atualizado com sucesso!';
+        const handleSuccess = () => {
+          console.log('🔙 Navigating back after successful save');
+          // Navigate back to characters tab to trigger refresh
+          router.replace('/(tabs)/characters');
+        };
+
+        if (Platform.OS === 'web') {
+          alert(`Sucesso: ${message}`);
+          handleSuccess();
+        } else {
+          Alert.alert('Sucesso', message, [
             {
               text: 'OK',
-              onPress: () => {
-                console.log('🔙 Navigating back after successful save');
-                router.back();
-              },
+              onPress: handleSuccess,
             },
-          ]
-        );
+          ]);
+        }
       } else {
         const errorText = await response.text();
         console.error('❌ Save failed:', errorText);
@@ -406,7 +412,11 @@ export default function EditCharacterScreen() {
           // Use default message if can't parse error
         }
         
-        Alert.alert('Erro de Salvamento', errorMessage);
+        if (Platform.OS === 'web') {
+          alert(`Erro de Salvamento: ${errorMessage}`);
+        } else {
+          Alert.alert('Erro de Salvamento', errorMessage);
+        }
       }
     } catch (error) {
       console.error('💥 Error saving character:', error);
@@ -421,7 +431,11 @@ export default function EditCharacterScreen() {
         }
       }
       
-      Alert.alert('Erro', errorMessage);
+      if (Platform.OS === 'web') {
+        alert(`Erro: ${errorMessage}`);
+      } else {
+        Alert.alert('Erro', errorMessage);
+      }
     } finally {
       setSaving(false);
       console.log('🔄 Save process completed');
@@ -430,11 +444,12 @@ export default function EditCharacterScreen() {
 
   const goBack = () => {
     if (saving) {
-      Alert.alert(
-        'Salvamento em Andamento',
-        'O personagem está sendo salvo. Aguarde a conclusão.',
-        [{ text: 'OK' }]
-      );
+      const message = 'O personagem está sendo salvo. Aguarde a conclusão.';
+      if (Platform.OS === 'web') {
+        alert(`Salvamento em Andamento: ${message}`);
+      } else {
+        Alert.alert('Salvamento em Andamento', message, [{ text: 'OK' }]);
+      }
       return;
     }
     

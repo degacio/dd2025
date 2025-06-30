@@ -287,12 +287,14 @@ export default function CreateCharacterScreen() {
       if (response.ok) {
         const createdCharacter = await response.json();
         console.log('✅ Character created successfully:', createdCharacter.name);
+        
         Alert.alert('Sucesso', `Personagem ${createdCharacter.name} criado com sucesso!`, [
           {
             text: 'OK',
             onPress: () => {
               console.log('🔙 Navigating back after character creation');
-              router.back();
+              // Navigate back to characters tab and trigger refresh
+              router.replace('/(tabs)/characters');
             },
           },
         ]);

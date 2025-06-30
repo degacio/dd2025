@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   Modal,
+  Platform,
 } from 'react-native';
 import { Character } from '@/types/database';
 import { Spell } from '@/types/spell';
@@ -26,6 +27,7 @@ import {
   Minus,
   Plus
 } from 'lucide-react-native';
+import { useFocusEffect } from 'expo-router';
 import classesData from '@/data/classes.json';
 
 interface SpellSlotInfo {
@@ -48,6 +50,14 @@ export default function GrimoireTab() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [allSpells, setAllSpells] = useState<Spell[]>([]);
+
+  // Auto-refresh when tab comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      console.log('🔄 Grimoire tab focused, refreshing data...');
+      loadData();
+    }, [])
+  );
 
   useEffect(() => {
     loadData();
@@ -91,7 +101,22 @@ export default function GrimoireTab() {
           const characterClass = classesData.find(cls => cls.name === char.class_name);
           return characterClass?.spellcasting;
         });
+        console.log('✅ Spellcasting characters loaded:', spellcasters.length);
         setCharacters(spellcasters);
+        
+        // Update selected character if it exists in the new data
+        if (selectedCharacter) {
+          const updatedSelectedCharacter = spellcasters.find(
+            (char: Character) => char.id === selectedCharacter.character.id
+          );
+          if (updatedSelectedCharacter) {
+            const updatedCharacterSpells = prepareCharacterSpells(updatedSelectedCharacter);
+            setSelectedCharacter(updatedCharacterSpells);
+          } else {
+            // Character was deleted or is no longer a spellcaster, close modal
+            setSelectedCharacter(null);
+          }
+        }
       }
     } catch (error) {
       console.error('Error loading characters:', error);
@@ -99,6 +124,7 @@ export default function GrimoireTab() {
   };
 
   const handleRefresh = async () => {
+    console.log('🔄 Manual refresh triggered in grimoire');
     setRefreshing(true);
     await loadData();
   };
@@ -174,7 +200,12 @@ export default function GrimoireTab() {
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
-        Alert.alert('Erro', 'Você precisa estar autenticado.');
+        const message = 'Você precisa estar autenticado.';
+        if (Platform.OS === 'web') {
+          alert(`Erro: ${message}`);
+        } else {
+          Alert.alert('Erro', message);
+        }
         return;
       }
 
@@ -207,8 +238,9 @@ export default function GrimoireTab() {
 
         if (response.ok) {
           const updatedCharacter = await response.json();
+          console.log('✅ Spell slots updated successfully');
           
-          // Update local state
+          // Update local state immediately
           setCharacters(prev => prev.map(char => 
             char.id === selectedCharacter.character.id ? updatedCharacter : char
           ));
@@ -216,13 +248,27 @@ export default function GrimoireTab() {
           // Update selected character
           const updatedCharacterSpells = prepareCharacterSpells(updatedCharacter);
           setSelectedCharacter(updatedCharacterSpells);
+          
+          // Refresh data to ensure consistency
+          await loadCharacters();
         } else {
-          Alert.alert('Erro', 'Não foi possível atualizar os espaços de magia.');
+          const message = 'Não foi possível atualizar os espaços de magia.';
+          if (Platform.OS === 'web') {
+            alert(`Erro: ${message}`);
+          } else {
+            Alert.alert('Erro', message);
+          }
         }
       }
     } catch (error) {
       console.error('Error updating spell slot:', error);
-      Alert.alert('Erro', 'Erro ao atualizar espaços de magia.');
+      
+      const message = 'Erro ao atualizar espaços de magia.';
+      if (Platform.OS === 'web') {
+        alert(`Erro: ${message}`);
+      } else {
+        Alert.alert('Erro', message);
+      }
     }
   };
 
@@ -268,11 +314,15 @@ export default function GrimoireTab() {
         </Text>
         
         <TouchableOpacity 
-          style={styles.refreshButton}
+          style={[styles.refreshButton, refreshing && styles.refreshButtonDisabled]}
           onPress={handleRefresh}
           disabled={refreshing}
         >
-          <RefreshCw size={20} color="#D4AF37" />
+          <RefreshCw 
+            size={20} 
+            color={refreshing ? "#95A5A6" : "#D4AF37"}
+            style={refreshing ? styles.spinning : undefined}
+          />
         </TouchableOpacity>
       </View>
 
@@ -531,6 +581,12 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     backgroundColor: 'rgba(212, 175, 55, 0.1)',
+  },
+  refreshButtonDisabled: {
+    backgroundColor: 'rgba(149, 165, 166, 0.1)',
+  },
+  spinning: {
+    // Add rotation animation if needed
   },
   content: {
     flex: 1,

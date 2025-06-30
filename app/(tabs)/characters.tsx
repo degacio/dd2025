@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Alert, Platform } from 'react-native';
 import { Character } from '@/types/database';
 import { Spell } from '@/types/spell';
@@ -16,7 +16,7 @@ import {
   UserPlus, 
   BookOpen 
 } from 'lucide-react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import classesData from '@/data/classes.json';
 
 export default function CharactersTab() {
@@ -26,6 +26,16 @@ export default function CharactersTab() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [user, setUser] = useState<any>(null);
+
+  // Auto-refresh when tab comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      console.log('🔄 Characters tab focused, refreshing data...');
+      if (user) {
+        loadCharacters();
+      }
+    }, [user])
+  );
 
   useEffect(() => {
     checkUser();
@@ -44,6 +54,7 @@ export default function CharactersTab() {
 
   const loadCharacters = async () => {
     try {
+      console.log('📚 Loading characters...');
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
@@ -59,10 +70,26 @@ export default function CharactersTab() {
 
       if (response.ok) {
         const charactersData = await response.json();
+        console.log('✅ Characters loaded:', charactersData.length);
         setCharacters(charactersData);
+        
+        // Update selected character if it exists in the new data
+        if (selectedCharacter) {
+          const updatedSelectedCharacter = charactersData.find(
+            (char: Character) => char.id === selectedCharacter.id
+          );
+          if (updatedSelectedCharacter) {
+            setSelectedCharacter(updatedSelectedCharacter);
+          } else {
+            // Character was deleted, close modal
+            setSelectedCharacter(null);
+          }
+        }
+      } else {
+        console.error('❌ Failed to load characters');
       }
     } catch (error) {
-      console.error('Error loading characters:', error);
+      console.error('💥 Error loading characters:', error);
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -70,6 +97,7 @@ export default function CharactersTab() {
   };
 
   const handleRefresh = async () => {
+    console.log('🔄 Manual refresh triggered');
     setRefreshing(true);
     await loadCharacters();
   };
@@ -100,12 +128,21 @@ export default function CharactersTab() {
       if (response.ok) {
         console.log('✅ Character deleted successfully');
         
-        // Remove character from local state
-        setCharacters(prev => prev.filter(char => char.id !== characterId));
+        // Immediately update local state
+        setCharacters(prev => {
+          const updated = prev.filter(char => char.id !== characterId);
+          console.log('📊 Characters after deletion:', updated.length);
+          return updated;
+        });
         
         // Close modal if the deleted character was selected
         if (selectedCharacter?.id === characterId) {
           setSelectedCharacter(null);
+        }
+        
+        // Close spell selection if the deleted character was selected
+        if (spellSelectionCharacter?.id === characterId) {
+          setSpellSelectionCharacter(null);
         }
         
         const message = 'Personagem excluído com sucesso!';
@@ -114,6 +151,9 @@ export default function CharactersTab() {
         } else {
           Alert.alert('Sucesso', message);
         }
+        
+        // Refresh data to ensure consistency
+        await loadCharacters();
       } else {
         const errorText = await response.text();
         console.error('❌ Failed to delete character:', errorText);
@@ -291,8 +331,9 @@ export default function CharactersTab() {
 
       if (response.ok) {
         const updatedCharacter = await response.json();
+        console.log('✅ Spells added successfully to character:', updatedCharacter.name);
         
-        // Update local state
+        // Update local state immediately
         setCharacters(prev => prev.map(char => 
           char.id === spellSelectionCharacter.id ? updatedCharacter : char
         ));
@@ -302,12 +343,18 @@ export default function CharactersTab() {
           setSelectedCharacter(updatedCharacter);
         }
         
+        // Update spell selection character
+        setSpellSelectionCharacter(updatedCharacter);
+        
         const message = `${newSpells.length} magia(s) adicionada(s) ao grimório de ${spellSelectionCharacter.name}!`;
         if (Platform.OS === 'web') {
           alert(`Sucesso: ${message}`);
         } else {
           Alert.alert('Sucesso', message);
         }
+        
+        // Refresh data to ensure consistency
+        await loadCharacters();
       } else {
         const errorText = await response.text();
         console.error('Error updating character:', errorText);
@@ -405,7 +452,13 @@ export default function CharactersTab() {
       if (response.ok) {
         const newCharacter = await response.json();
         console.log('✅ Character created successfully:', newCharacter.name);
-        setCharacters(prev => [newCharacter, ...prev]);
+        
+        // Immediately add to local state
+        setCharacters(prev => {
+          const updated = [newCharacter, ...prev];
+          console.log('📊 Characters after creation:', updated.length);
+          return updated;
+        });
         
         const message = 'Personagem de exemplo criado!';
         if (Platform.OS === 'web') {
@@ -413,6 +466,9 @@ export default function CharactersTab() {
         } else {
           Alert.alert('Sucesso', message);
         }
+        
+        // Refresh data to ensure consistency
+        await loadCharacters();
       } else {
         const errorText = await response.text();
         console.log('❌ API Error response:', errorText);
@@ -494,11 +550,15 @@ export default function CharactersTab() {
         
         <View style={styles.headerActions}>
           <TouchableOpacity 
-            style={styles.headerButton}
+            style={[styles.headerButton, refreshing && styles.headerButtonDisabled]}
             onPress={handleRefresh}
             disabled={refreshing}
           >
-            <RefreshCw size={20} color="#D4AF37" />
+            <RefreshCw 
+              size={20} 
+              color={refreshing ? "#95A5A6" : "#D4AF37"} 
+              style={refreshing ? styles.spinning : undefined}
+            />
           </TouchableOpacity>
           
           <TouchableOpacity 
@@ -665,6 +725,12 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     backgroundColor: 'rgba(212, 175, 55, 0.1)',
+  },
+  headerButtonDisabled: {
+    backgroundColor: 'rgba(149, 165, 166, 0.1)',
+  },
+  spinning: {
+    // Add rotation animation if needed
   },
   navigationContainer: {
     backgroundColor: '#FFFFFF',
