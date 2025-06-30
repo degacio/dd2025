@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { SpellList } from '@/components/SpellList';
 import { Spell } from '@/types/spell';
-import { Sparkles, Shield } from 'lucide-react-native';
+import { Sparkles } from 'lucide-react-native';
 import { adaptSpellsFromLivroDoJogador } from '@/utils/spellAdapter';
 import { Platform } from 'react-native';
-import { router } from 'expo-router';
 
 export default function SpellsTab() {
   const [spells, setSpells] = useState<Spell[]>([]);
@@ -74,10 +73,6 @@ export default function SpellsTab() {
     }
   };
 
-  const navigateToCharacters = () => {
-    router.push('/characters');
-  };
-
   if (loading) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
@@ -100,15 +95,6 @@ export default function SpellsTab() {
       </View>
       
       <SpellList spells={spells} />
-      
-      {/* Floating Action Button for Characters */}
-      <TouchableOpacity 
-        style={styles.fab}
-        onPress={navigateToCharacters}
-        activeOpacity={0.8}
-      >
-        <Shield size={28} color="#FFFFFF" />
-      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -151,23 +137,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#D4AF37',
     fontWeight: '500',
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 24,
-    right: 24,
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: '#D4AF37',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    borderWidth: 2,
-    borderColor: '#B8941F',
   },
 });
