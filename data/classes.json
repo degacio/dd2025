@@ -1,0 +1,723 @@
+[
+  {
+    "id": "barbarian",
+    "name": "Bárbaro",
+    "description": "Um guerreiro primitivo de fúria incontrolável em batalha.",
+    "hitDie": "d12",
+    "primaryAbility": ["Força"],
+    "savingThrowProficiencies": ["Força", "Constituição"],
+    "skillProficiencies": ["Adestrar Animais", "Atletismo", "Intimidação", "Natureza", "Percepção", "Sobrevivência"],
+    "armorProficiencies": ["Armaduras leves", "Armaduras médias", "Escudos"],
+    "weaponProficiencies": ["Armas simples", "Armas marciais"],
+    "toolProficiencies": [],
+    "startingEquipment": [
+      "Machado grande ou qualquer arma marcial corpo a corpo",
+      "Dois machados de mão ou qualquer arma simples",
+      "Kit de explorador e quatro azagaias",
+      ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "proficiencia": 2 ,
+        "proficiencyBonus": 2,
+        "name": "Fúria",
+        "description": "Na batalha, você luta com uma ferocidade primitiva. Em seu turno, você pode entrar em fúria como uma ação bônus.\n\nDurante essa fúria, você ganha os seguintes benefícios se não estiver usando armadura pesada:\n\n• Você tem vantagem em testes de Força e em salvaguardas de Força.\n• Quando realiza um ataque com arma corpo a corpo usando Força, você recebe um bônus no dano que aumenta conforme você sobe de nível como um bárbaro, conforme mostrado na coluna de Dano da Fúria da tabela O Bárbaro.\n• Você tem resistência a dano contundente, perfurante e cortante.\n\nSe você é capaz de lançar magias, não pode lançá-las ou concentrar-se nelas enquanto está em fúria.\n\nSua fúria dura 1 minuto e termina antecipadamente se você ficar inconsciente ou se seu turno terminar e você não tiver atacado uma criatura hostil desde o seu último turno ou não tiver sofrido dano desde então. Você também pode encerrar sua fúria em seu turno como uma ação bônus. Uma vez que você entrou em fúria o número de vezes mostrado para o seu nível de bárbaro na coluna de Fúria da tabela O Bárbaro, você deve terminar um descanso longo antes de poder entrar em Fúria novamente."
+
+      },
+      
+      {
+        "level": 1,
+        "proficiencyBonus": 2,
+        "name": "Defesa sem Armadura",
+        "description": "Quando você não estiver vestindo qualquer armadura, sua Classe de Armadura será 10 + seu modificador de Destreza + seu modificador de Constituição."
+      },
+      
+      {
+        "level": 2,
+        "proficiencyBonus": 2,
+        "name": "Ataque Descuidado",
+        "description": "A partir do 2º nível, você pode descartar todas as preocupações com defesa para atacar com uma feroz desesperação. Quando você realiza seu primeiro ataque em seu turno, você pode decidir atacar imprudentemente. Fazê-lo lhe concede vantagem nos rolagens de ataque de armas corpo a corpo usando Força durante este turno, mas as rolagens de ataque contra você têm vantagem até o seu próximo turno."
+      },
+      
+      {
+        "level": 2,
+        "proficiencyBonus": 2,
+        "name": "Sentido de Perigo",
+        "description": "No 2º nível, você desenvolve um sentido incomum de quando as coisas nas proximidades não estão como deveriam, dando-lhe uma vantagem quando se esquiva de perigos. Você tem vantagem em salvaguardas de Destreza contra efeitos que você pode ver, como armadilhas e magias. Para obter esse benefício, você não pode estar cego, ensurdecido ou incapacitado."
+      },
+
+      {
+        "level": 3,
+        "proficiencyBonus": 2,
+        "name": "Trilha Primitiva",
+        "description": "No 3º nível, você escolhe uma trilha que molda a natureza da sua fúria. As trilhas são detalhadas ao final da descrição dessa classe. Sua escolha concede características a você no 3º nível e novamente no 6º, 10º e 14º níveis."
+      },
+
+      {
+      "level": 4,
+        "proficiencyBonus": 2,
+        "name": "Aumento no Valor de Atributo",
+        "description": "Quando você atinge o 4º nível, e novamente no 8º, 12º, 16º e 19º níveis, você pode aumentar um atributo de sua escolha em 2 pontos, ou você pode aumentar dois atributos de sua escolha em 1 ponto cada. Como de costume, você não pode aumentar um atributo acima de 20 usando esse recurso."
+      },
+      
+      {
+        "level": 5,
+        "proficiencyBonus": 3,
+        "name": "Ataque Extra",
+        "description": "A partir do 5º nível, você pode realizar dois ataques, em vez de um, sempre que realizar a ação Atacar em seu turno."  
+      },
+      
+      {
+        "level": 5,
+        "proficiencyBonus": 3,
+        "name": "Movimento Rápido",
+        "description": "Começando no 5º nível, sua velocidade aumenta em 3m quando você não está usando armadura pesada."
+      },
+
+      {
+        "level": 7,
+        "proficiencyBonus": 3,
+        "name": "Instintos Primitivos",
+        "description": "No 7º nível, seus instintos estão tão afiados que você tem vantagem em rolagens de iniciativa. Além disso, se você estiver surpreso no início do combate e não estiver incapacitado, você pode agir normalmente em seu primeiro turno, mas somente se entrar em fúria antes de fazer qualquer outra coisa naquele turno."
+      },
+
+      {
+        "level": 9,
+        "proficiencyBonus": 4,
+        "name": "Crítico Brutal",
+        "description": "Começando no 9º nível, você pode rolar um dado de dano adicional ao determinar o dano extra de um acerto crítico com um ataque corpo a corpo. Isso aumenta para dois dados adicionais no 13º nível e três dados adicionais no 17º nível."
+      },
+
+      {
+        "level": 11,
+        "proficiencyBonus": 4,
+        "name": "Fúria Implacável",
+        "description": "A partir do 11º nível, sua fúria pode mantê-lo lutando apesar de ferimentos graves. Se você chegar a 0 pontos de vida enquanto está em fúria e não morrer imediatamente, você pode fazer uma salvaguarda de Constituição CD 10. Se tiver sucesso, você cairá a 1 ponto de vida em vez disso.\n\nCada vez que você usa esse recurso após o primeiro, a CD aumenta em 5. Quando você terminar um descanso curto ou longo, a CD é redefinida para 10."
+      },
+      
+      {
+        "level": 15,
+        "proficiencyBonus": 5,
+        "name": "Fúria Persistente",
+        "description": "A partir do 15º nível, sua fúria termina antecipadamente apenas se você ficar inconsciente ou escolher encerrá-la."
+      },
+
+      {
+        "level": 18,
+        "proficiencyBonus": 6,
+        "name": "Fúria Indomável",
+        "description": "A partir do 18º nível, se sua soma para um teste de Força for menor do que seu valor de Força, você pode usar esse valor no lugar da soma."
+      },
+      
+      {
+        "level": 20,
+        "proficiencyBonus": 6,
+        "name": "Campeão Primitivo",
+        "description": "No 20º nível, você incorpora o poder da natureza. Seus valores de Força e Constituição aumentam em 4. Seu máximo para esses valores agora é 24."
+      }
+    ],
+    "subclasses": [
+      {
+        "name": "Caminho do Berserker",
+        "description": "Para alguns bárbaros, a fúria é um meio para um fim – esse fim sendo a violência. O Caminho do Berserker é um caminho de fúria desenfreada, escorrendo sangue.",
+        "features": [
+          {
+            "level": 3,
+            "name": "Frenesi",
+            "description": "Quando você escolhe esse caminho no 3º nível, você pode entrar em um frenesi quando está em fúria. Se você fizer isso, pela duração da sua fúria você pode realizar um único ataque corpo a corpo com arma como uma ação bônus em cada um dos seus turnos após esse. Quando sua fúria acabar, você sofre um nível de exaustão."
+          },
+          {
+            "level": 6,
+            "name": "Fúria Incontrolável",
+            "description": "A partir do 6º nível, você não pode ser enfeitiçado ou amedrontado enquanto está em fúria. Se você está enfeitiçado ou amedrontado quando entrar em fúria, o efeito é suspenso pela duração da fúria."
+          }
+        ]
+      },
+      {
+        "name": "Caminho do Guardião Totêmico",
+        "description": "O Caminho do Guardião Totêmico é uma jornada espiritual, enquanto o bárbaro aceita um espírito animal como guia, protetor e inspiração.",
+        "features": [
+          {
+            "level": 3,
+            "name": "Buscador Espiritual",
+            "description": "Seu caminho é buscar sintonia com o mundo natural, dando-lhe afinidade com as bestas. No 3º nível, quando você adota esse caminho, você ganha a habilidade de conjurar as magias sentidos animalescos e falar com animais, mas apenas como rituais."
+          },
+          {
+            "level": 3,
+            "name": "Espírito Totêmico",
+            "description": "No 3º nível, quando você adota esse caminho, você escolhe um espírito totêmico e ganha a característica dele. Você deve fazer ou adquirir um objeto totêmico físico."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bard",
+    "name": "Bardo",
+    "description": "Um mestre de canções, falas e magias que elas contêm.",
+    "hitDie": "d8",
+    "primaryAbility": ["Carisma"],
+    "savingThrowProficiencies": ["Destreza", "Carisma"],
+    "skillProficiencies": ["Qualquer três à sua escolha"],
+    "armorProficiencies": ["Armaduras leves"],
+    "weaponProficiencies": ["Armas simples", "Bestas de mão", "Espadas longas", "Rapieiras", "Espadas curtas"],
+    "toolProficiencies": ["Três instrumentos musicais à sua escolha"],
+    "startingEquipment": [
+      "Rapiera ou espada longa ou qualquer arma simples",
+      "Kit de diplomata ou kit de artista",
+      "Alaúde ou qualquer outro instrumento musical",
+      "Armadura de couro e uma adaga"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Conjuração",
+        "description": "Você aprendeu a desembaraçar e remodelar o tecido da realidade em harmonia com os seus desejos e música."
+      },
+      {
+        "level": 1,
+        "name": "Inspiração de Bardo",
+        "description": "Você pode inspirar os outros através de palavras animadoras ou música."
+      },
+      {
+        "level": 2,
+        "name": "Versatilidade",
+        "description": "Você pode adicionar metade do seu bônus de proficiência em qualquer teste de habilidade que não inclua seu bônus de proficiência."
+      },
+      {
+        "level": 2,
+        "name": "Canção de Descanso",
+        "description": "Você pode usar música ou oração calmante para ajudar a revitalizar seus aliados feridos durante um descanso curto."
+      }
+    ],
+    "spellcasting": {
+      "ability": "Carisma",
+      "cantripsKnown": [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "spellsKnown": [4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22],
+      "spellSlots": {
+        1: [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        2: [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        3: [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        4: [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        5: [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+      },
+      "ritualCasting": true,
+      "spellcastingFocus": "Foco de conjuração"
+    },
+    "subclasses": ["Colégio do Conhecimento", "Colégio do Valor"]
+  },
+  {
+    "id": "cleric",
+    "name": "Clérigo",
+    "description": "Um campeão sacerdotal que empunha magia divina a serviço de um poder superior.",
+    "hitDie": "d8",
+    "primaryAbility": ["Sabedoria"],
+    "savingThrowProficiencies": ["Sabedoria", "Carisma"],
+    "skillProficiencies": ["História", "Intuição", "Medicina", "Persuasão", "Religião"],
+    "armorProficiencies": ["Armaduras leves", "Armaduras médias", "Escudos"],
+    "weaponProficiencies": ["Armas simples"],
+    "toolProficiencies": [],
+    "startingEquipment": [
+      "Maça ou martelo de guerra",
+      "Armadura de escamas, armadura de couro ou cota de malha",
+      "Besta leve e 20 virotes ou qualquer arma simples",
+      "Kit de sacerdote ou kit de explorador",
+      "Escudo e símbolo sagrado"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Conjuração",
+        "description": "Como um canalizador de poder divino, você pode conjurar magias de clérigo."
+      },
+      {
+        "level": 1,
+        "name": "Domínio Divino",
+        "description": "Escolha um domínio relacionado à sua divindade."
+      },
+      {
+        "level": 2,
+        "name": "Canalizar Divindade",
+        "description": "Você se torna capaz de canalizar energia divina diretamente de sua divindade."
+      },
+      {
+        "level": 5,
+        "name": "Destruir Mortos-vivos",
+        "description": "Quando um morto-vivo falha no teste de resistência contra a sua característica Afastar Mortos-vivos, a criatura é instantaneamente destruída."
+      }
+    ],
+    "spellcasting": {
+      "ability": "Sabedoria",
+      "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "spellSlots": {
+        1: [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        2: [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        3: [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        4: [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        5: [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2],
+        8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2],
+        9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2]
+      },
+      "ritualCasting": true,
+      "spellcastingFocus": "Símbolo sagrado"
+    },
+    "subclasses": ["Domínio da Conhecimento", "Domínio da Vida", "Domínio da Luz", "Domínio da Natureza", "Domínio da Tempestade", "Domínio da Trapaça", "Domínio da Guerra"]
+  },
+  {
+    "id": "druid",
+    "name": "Druida",
+    "description": "Um sacerdote da Natureza, empunhando magia elemental e se transformando em formas animais.",
+    "hitDie": "d8",
+    "primaryAbility": ["Sabedoria"],
+    "savingThrowProficiencies": ["Inteligência", "Sabedoria"],
+    "skillProficiencies": ["Adestrar Animais", "Arcanismo", "Intuição", "Medicina", "Natureza", "Percepção", "Religião", "Sobrevivência"],
+    "armorProficiencies": ["Armaduras leves", "Armaduras médias", "Escudos (não-metálicos)"],
+    "weaponProficiencies": ["Clavas", "Adagas", "Dardos", "Azagaias", "Maças", "Bordões", "Cimitarras", "Foices", "Fundas", "Lanças"],
+    "toolProficiencies": ["Kit de herbalismo"],
+    "startingEquipment": [
+      "Escudo de madeira ou qualquer arma simples",
+      "Cimitarra ou qualquer arma corpo a corpo simples",
+      "Armadura de couro, kit de explorador e 20 dardos"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Druídico",
+        "description": "Você conhece o Druídico, a linguagem secreta dos druidas."
+      },
+      {
+        "level": 1,
+        "name": "Conjuração",
+        "description": "Baseando-se na essência divina da própria natureza, você pode conjurar magias para moldar essa essência à sua vontade."
+      },
+      {
+        "level": 2,
+        "name": "Forma Selvagem",
+        "description": "Você pode usar sua ação para assumir magicamente a forma de uma besta que você já tenha visto antes."
+      },
+      {
+        "level": 2,
+        "name": "Círculo Druídico",
+        "description": "Você escolhe se identificar com um círculo de druidas."
+      }
+    ],
+    "spellcasting": {
+      "ability": "Sabedoria",
+      "cantripsKnown": [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "spellSlots": {
+        1: [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        2: [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        3: [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        4: [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        5: [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2],
+        8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2],
+        9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2]
+      },
+      "ritualCasting": true,
+      "spellcastingFocus": "Foco druídico"
+    },
+    "subclasses": ["Círculo da Terra", "Círculo da Lua"]
+  },
+  {
+    "id": "fighter",
+    "name": "Guerreiro",
+    "description": "Um mestre do combate marcial, hábil com uma variedade de armas e armaduras.",
+    "hitDie": "d10",
+    "primaryAbility": ["Força", "Destreza"],
+    "savingThrowProficiencies": ["Força", "Constituição"],
+    "skillProficiencies": ["Acrobacia", "Adestrar Animais", "Atletismo", "História", "Intuição", "Intimidação", "Percepção", "Sobrevivência"],
+    "armorProficiencies": ["Todas as armaduras", "Escudos"],
+    "weaponProficiencies": ["Armas simples", "Armas marciais"],
+    "toolProficiencies": [],
+    "startingEquipment": [
+      "Cota de malha ou armadura de couro, arco longo e 20 flechas",
+      "Arma marcial e escudo ou duas armas marciais",
+      "Besta leve e 20 virotes ou dois machados de mão",
+      "Kit de masmorra ou kit de explorador"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Estilo de Luta",
+        "description": "Você adota um estilo de luta particular como sua especialidade."
+      },
+      {
+        "level": 1,
+        "name": "Recuperação",
+        "description": "Você possui uma resistência limitada que pode protegê-lo de ferimentos."
+      },
+      {
+        "level": 2,
+        "name": "Ação Impetuosa",
+        "description": "Você pode ultrapassar seus limites normais por um momento."
+      },
+      {
+        "level": 3,
+        "name": "Arquétipo Marcial",
+        "description": "Você escolhe um arquétipo que se esforça para imitar nos seus estilos e técnicas de combate."
+      }
+    ],
+    "subclasses": ["Campeão", "Mestre de Batalha", "Cavaleiro Arcano"]
+  },
+  {
+    "id": "monk",
+    "name": "Monge",
+    "description": "Um mestre das artes marciais, aproveitando o poder do corpo em busca da perfeição física e espiritual.",
+    "hitDie": "d8",
+    "primaryAbility": ["Destreza", "Sabedoria"],
+    "savingThrowProficiencies": ["Força", "Destreza"],
+    "skillProficiencies": ["Acrobacia", "Atletismo", "Furtividade", "História", "Intuição", "Religião"],
+    "armorProficiencies": [],
+    "weaponProficiencies": ["Armas simples", "Espadas curtas"],
+    "toolProficiencies": ["Um tipo de ferramenta de artesão ou um instrumento musical"],
+    "startingEquipment": [
+      "Espada curta ou qualquer arma simples",
+      "Kit de masmorra ou kit de explorador",
+      "10 dardos"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Defesa sem Armadura",
+        "description": "Quando você não estiver vestindo uma armadura nem empunhando um escudo, sua CA será 10 + seu modificador de Destreza + seu modificador de Sabedoria."
+      },
+      {
+        "level": 1,
+        "name": "Artes Marciais",
+        "description": "Sua prática das artes marciais concede a você maestria dos estilos de combate que utilizam golpes desarmados e armas de monge."
+      },
+      {
+        "level": 2,
+        "name": "Chi",
+        "description": "Sua prática das artes marciais permite que você domine o uso da energia mística."
+      },
+      {
+        "level": 2,
+        "name": "Movimento sem Armadura",
+        "description": "Sua velocidade aumenta em 3 metros enquanto você não estiver vestindo uma armadura ou empunhando um escudo."
+      }
+    ],
+    "subclasses": ["Caminho da Mão Aberta", "Caminho da Sombra", "Caminho dos Quatro Elementos"]
+  },
+  {
+    "id": "paladin",
+    "name": "Paladino",
+    "description": "Um guerreiro sagrado ligado a um juramento sagrado.",
+    "hitDie": "d10",
+    "primaryAbility": ["Força", "Carisma"],
+    "savingThrowProficiencies": ["Sabedoria", "Carisma"],
+    "skillProficiencies": ["Atletismo", "Intuição", "Intimidação", "Medicina", "Persuasão", "Religião"],
+    "armorProficiencies": ["Todas as armaduras", "Escudos"],
+    "weaponProficiencies": ["Armas simples", "Armas marciais"],
+    "toolProficiencies": [],
+    "startingEquipment": [
+      "Arma marcial e escudo ou duas armas marciais",
+      "Cinco azagaias ou qualquer arma simples corpo a corpo",
+      "Cota de malha e kit de explorador",
+      "Símbolo sagrado"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Sentido Divino",
+        "description": "A presença de mal poderoso é registrada nos seus sentidos como um odor nocivo."
+      },
+      {
+        "level": 1,
+        "name": "Cura pelas Mãos",
+        "description": "Seu toque abençoado pode curar ferimentos."
+      },
+      {
+        "level": 2,
+        "name": "Estilo de Luta",
+        "description": "Você adota um estilo de luta particular como sua especialidade."
+      },
+      {
+        "level": 2,
+        "name": "Conjuração",
+        "description": "Você aprendeu a extrair magia divina através de meditação e oração para conjurar magias."
+      }
+    ],
+    "spellcasting": {
+      "ability": "Carisma",
+      "spellSlots": {
+        1: [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        2: [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        3: [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
+        5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2]
+      },
+      "spellcastingFocus": "Símbolo sagrado"
+    },
+    "subclasses": ["Juramento de Devoção", "Juramento dos Anciões", "Juramento de Vingança"]
+  },
+  {
+    "id": "ranger",
+    "name": "Patrulheiro",
+    "description": "Um guerreiro das terras selvagens, hábil em rastrear, sobreviver e combater.",
+    "hitDie": "d10",
+    "primaryAbility": ["Destreza", "Sabedoria"],
+    "savingThrowProficiencies": ["Força", "Destreza"],
+    "skillProficiencies": ["Adestrar Animais", "Atletismo", "Furtividade", "Intuição", "Investigação", "Natureza", "Percepção", "Sobrevivência"],
+    "armorProficiencies": ["Armaduras leves", "Armaduras médias", "Escudos"],
+    "weaponProficiencies": ["Armas simples", "Armas marciais"],
+    "toolProficiencies": [],
+    "startingEquipment": [
+      "Armadura de escamas ou armadura de couro",
+      "Duas espadas curtas ou duas armas simples corpo a corpo",
+      "Kit de masmorra ou kit de explorador",
+      "Arco longo e aljava com 20 flechas"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Inimigo Favorito",
+        "description": "Você tem experiência significativa estudando, rastreando, caçando, e até mesmo falando com um certo tipo de inimigo."
+      },
+      {
+        "level": 1,
+        "name": "Explorador Natural",
+        "description": "Você é particularmente familiar com um tipo de ambiente natural e é adepto a viajar e sobreviver em tais regiões."
+      },
+      {
+        "level": 2,
+        "name": "Estilo de Luta",
+        "description": "Você adota um estilo de luta particular como sua especialidade."
+      },
+      {
+        "level": 2,
+        "name": "Conjuração",
+        "description": "Você aprendeu a usar a essência mágica da natureza para conjurar magias."
+      }
+    ],
+    "spellcasting": {
+      "ability": "Sabedoria",
+      "spellsKnown": [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11],
+      "spellSlots": {
+        1: [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        2: [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        3: [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        4: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
+        5: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2]
+      },
+      "ritualCasting": false,
+      "spellcastingFocus": "Foco druídico"
+    },
+    "subclasses": ["Caçador", "Mestre das Feras"]
+  },
+  {
+    "id": "rogue",
+    "name": "Ladino",
+    "description": "Um canalha que usa furtividade e truques para superar obstáculos e inimigos.",
+    "hitDie": "d8",
+    "primaryAbility": ["Destreza"],
+    "savingThrowProficiencies": ["Destreza", "Inteligência"],
+    "skillProficiencies": ["Acrobacia", "Atletismo", "Atuação", "Enganação", "Furtividade", "Intimidação", "Intuição", "Investigação", "Percepção", "Persuasão", "Prestidigitação", "Sobrevivência"],
+    "armorProficiencies": ["Armaduras leves"],
+    "weaponProficiencies": ["Armas simples", "Bestas de mão", "Espadas longas", "Rapieiras", "Espadas curtas"],
+    "toolProficiencies": ["Ferramentas de ladrão"],
+    "startingEquipment": [
+      "Rapiera ou espada curta",
+      "Arco curto e aljava com 20 flechas ou espada curta",
+      "Kit de assaltante, kit de masmorra ou kit de explorador",
+      "Armadura de couro, duas adagas e ferramentas de ladrão"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Especialização",
+        "description": "Escolha duas das suas perícias proficientes, ou uma das suas perícias proficientes e ferramentas de ladrão."
+      },
+      {
+        "level": 1,
+        "name": "Ataque Furtivo",
+        "description": "Você sabe como atacar sutilmente e explorar a distração de um inimigo."
+      },
+      {
+        "level": 1,
+        "name": "Gíria de Ladrão",
+        "description": "Durante seu treinamento de ladino você aprendeu gíria de ladrão, um misto secreto de dialeto, jargão e códigos."
+      },
+      {
+        "level": 2,
+        "name": "Ação Ardilosa",
+        "description": "Sua agilidade mental e física permite que você se mova e aja rapidamente."
+      }
+    ],
+    "subclasses": ["Ladrão", "Assassino", "Trapaceiro Arcano"]
+  },
+  {
+    "id": "sorcerer",
+    "name": "Feiticeiro",
+    "description": "Um conjurador que extrai de uma fonte de magia inata.",
+    "hitDie": "d6",
+    "primaryAbility": ["Carisma"],
+    "savingThrowProficiencies": ["Constituição", "Carisma"],
+    "skillProficiencies": ["Arcanismo", "Enganação", "Intimidação", "Intuição", "Persuasão", "Religião"],
+    "armorProficiencies": [],
+    "weaponProficiencies": ["Adagas", "Dardos", "Fundas", "Bordões", "Bestas leves"],
+    "toolProficiencies": [],
+    "startingEquipment": [
+      "Besta leve e 20 virotes ou qualquer arma simples",
+      "Bolsa de componentes ou foco arcano",
+      "Kit de masmorra ou kit de explorador",
+      "Duas adagas"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Conjuração",
+        "description": "Um evento em seu passado, ou na vida de um parente ou ancestral, deixou uma marca indelével em você, infundindo-o com magia arcana."
+      },
+      {
+        "level": 1,
+        "name": "Origem Sorcerística",
+        "description": "Escolha uma origem sorcerística, que descreve a fonte do seu poder mágico inato."
+      },
+      {
+        "level": 2,
+        "name": "Fonte da Magia",
+        "description": "Você tem 2 pontos de feitiçaria, e ganha mais conforme alcança níveis superiores."
+      },
+      {
+        "level": 3,
+        "name": "Metamagia",
+        "description": "Você ganha a habilidade de distorcer suas magias para adequá-las às suas necessidades."
+      }
+    ],
+    "spellcasting": {
+      "ability": "Carisma",
+      "cantripsKnown": [4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
+      "spellsKnown": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15],
+      "spellSlots": {
+        1: [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        2: [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        3: [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        4: [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        5: [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2],
+        8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2],
+        9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2]
+      },
+      "spellcastingFocus": "Foco arcano"
+    },
+    "subclasses": ["Linhagem Dracônica", "Magia Selvagem"]
+  },
+  {
+    "id": "warlock",
+    "name": "Bruxo",
+    "description": "Um conjurador que fez um pacto com uma entidade extraplanar.",
+    "hitDie": "d8",
+    "primaryAbility": ["Carisma"],
+    "savingThrowProficiencies": ["Sabedoria", "Carisma"],
+    "skillProficiencies": ["Arcanismo", "Enganação", "História", "Intimidação", "Investigação", "Natureza", "Religião"],
+    "armorProficiencies": ["Armaduras leves"],
+    "weaponProficiencies": ["Armas simples"],
+    "toolProficiencies": [],
+    "startingEquipment": [
+      "Besta leve e 20 virotes ou qualquer arma simples",
+      "Bolsa de componentes ou foco arcano",
+      "Kit de erudito ou kit de masmorra",
+      "Armadura de couro, qualquer arma simples e duas adagas"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Patrono Transcendental",
+        "description": "Você realizou um pacto com um ser transcendental de sua escolha."
+      },
+      {
+        "level": 1,
+        "name": "Magia de Pacto",
+        "description": "Sua pesquisa arcana e a magia outorgada a você por seu patrono lhe concedem uma gama de magias."
+      },
+      {
+        "level": 2,
+        "name": "Invocações Místicas",
+        "description": "Em seus estudos de conhecimento oculto, você descobriu invocações místicas, fragmentos de conhecimento proibido que infundem você com habilidade mágica permanente."
+      },
+      {
+        "level": 3,
+        "name": "Dádiva do Pacto",
+        "description": "Seu patrono transcendental lhe concede uma dádiva por seus serviços leais."
+      }
+    ],
+    "spellcasting": {
+      "ability": "Carisma",
+      "cantripsKnown": [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "spellsKnown": [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15],
+      "spellSlots": {
+        1: [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        2: [0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        3: [0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        4: [0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        5: [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+      },
+      "spellcastingFocus": "Foco arcano"
+    },
+    "subclasses": ["O Feérico", "O Corruptor", "O Grande Antigo"]
+  },
+  {
+    "id": "wizard",
+    "name": "Mago",
+    "description": "Um usuário erudito de magia capaz de manipular as estruturas da realidade.",
+    "hitDie": "d6",
+    "primaryAbility": ["Inteligência"],
+    "savingThrowProficiencies": ["Inteligência", "Sabedoria"],
+    "skillProficiencies": ["Arcanismo", "História", "Intuição", "Investigação", "Medicina", "Religião"],
+    "armorProficiencies": [],
+    "weaponProficiencies": ["Adagas", "Dardos", "Fundas", "Bordões", "Bestas leves"],
+    "toolProficiencies": [],
+    "startingEquipment": [
+      "Bordão ou adaga",
+      "Bolsa de componentes ou foco arcano",
+      "Kit de erudito ou kit de explorador",
+      "Livro de magias"
+    ],
+    "classFeatures": [
+      {
+        "level": 1,
+        "name": "Conjuração",
+        "description": "Como um estudante de magia arcana, você possui um livro de magias contendo magias que mostram os primeiros vislumbres do seu verdadeiro poder."
+      },
+      {
+        "level": 1,
+        "name": "Recuperação Arcana",
+        "description": "Você aprendeu a recuperar um pouco de sua energia mágica estudando seu livro de magias."
+      },
+      {
+        "level": 2,
+        "name": "Tradição Arcana",
+        "description": "Você escolhe uma tradição arcana, moldando sua prática de magia através de uma das oito escolas."
+      },
+      {
+        "level": 18,
+        "name": "Maestria em Magia",
+        "description": "Você alcançou tamanha maestria em certas magias que pode conjurá-las à vontade."
+      }
+    ],
+    "spellcasting": {
+      "ability": "Inteligência",
+      "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "spellSlots": {
+        1: [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        2: [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        3: [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        4: [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        5: [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        6: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        7: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2],
+        8: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2],
+        9: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2]
+      },
+      "ritualCasting": true,
+      "spellcastingFocus": "Foco arcano"
+    },
+    "subclasses": ["Escola de Abjuração", "Escola de Adivinhação", "Escola de Encantamento", "Escola de Evocação", "Escola de Ilusão", "Escola de Invocação", "Escola de Necromancia", "Escola de Transmutação"]
+  }
+]

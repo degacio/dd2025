@@ -1,0 +1,235 @@
+[
+  {
+    "id": "human",
+    "name": "Humano",
+    "description": "Os humanos são a raça mais adaptável e ambiciosa entre as raças comuns. Eles têm gostos, moralidades e costumes amplamente divergentes nas muitas terras diferentes onde se estabeleceram.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityScoreIncrease": {
+      "strength": 1,
+      "dexterity": 1,
+      "constitution": 1,
+      "intelligence": 1,
+      "wisdom": 1,
+      "charisma": 1
+    },
+    "traits": [
+      {
+        "name": "Versatilidade",
+        "description": "Você ganha proficiência em uma perícia à sua escolha."
+      },
+      {
+        "name": "Idioma Extra",
+        "description": "Você pode falar, ler e escrever um idioma extra à sua escolha."
+      }
+    ],
+    "languages": ["Comum"]
+  },
+  {
+    "id": "elf",
+    "name": "Elfo",
+    "description": "Elfos são um povo mágico de graça sobrenatural, vivendo no mundo sem pertencer inteiramente a ele. Eles vivem em lugares de beleza etérea, no meio de florestas antigas ou em torres prateadas.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityScoreIncrease": {
+      "dexterity": 2
+    },
+    "traits": [
+      {
+        "name": "Visão no Escuro",
+        "description": "Você pode ver no escuro a até 18 metros como se fosse luz fraca, e na luz fraca como se fosse luz plena."
+      },
+      {
+        "name": "Sentidos Aguçados",
+        "description": "Você tem proficiência na perícia Percepção."
+      },
+      {
+        "name": "Ancestralidade Feérica",
+        "description": "Você tem vantagem em testes de resistência contra ser enfeitiçado e magia não pode colocá-lo para dormir."
+      },
+      {
+        "name": "Transe",
+        "description": "Elfos não precisam dormir. Em vez disso, eles meditam profundamente, permanecendo semiconscientes, por 4 horas por dia."
+      }
+    ],
+    "languages": ["Comum", "Élfico"]
+  },
+  {
+    "id": "dwarf",
+    "name": "Anão",
+    "description": "Reinos ricos de antiga grandeza, salões esculpidos nas raízes das montanhas, o eco de picaretas e martelos nas minas profundas e nas forjas ardentes, um compromisso com o clã e a tradição.",
+    "size": "Médio",
+    "speed": 7.5,
+    "abilityScoreIncrease": {
+      "constitution": 2
+    },
+    "traits": [
+      {
+        "name": "Visão no Escuro",
+        "description": "Você pode ver no escuro a até 18 metros como se fosse luz fraca, e na luz fraca como se fosse luz plena."
+      },
+      {
+        "name": "Resistência Anã",
+        "description": "Você tem vantagem em testes de resistência contra veneno e resistência contra dano de veneno."
+      },
+      {
+        "name": "Treinamento Anão em Combate",
+        "description": "Você tem proficiência com machados de batalha, machadinhas, martelos leves e martelos de guerra."
+      },
+      {
+        "name": "Especialização em Ferramentas",
+        "description": "Você ganha proficiência com ferramentas de artesão à sua escolha: ferramentas de ferreiro, suprimentos de cervejeiro ou ferramentas de pedreiro."
+      }
+    ],
+    "languages": ["Comum", "Anão"]
+  },
+  {
+    "id": "halfling",
+    "name": "Halfling",
+    "description": "Os confortos de casa são os objetivos da maioria dos halflings: um lugar para viver em paz e sossego, longe de monstros saqueadores e exércitos em choque.",
+    "size": "Pequeno",
+    "speed": 7.5,
+    "abilityScoreIncrease": {
+      "dexterity": 2
+    },
+    "traits": [
+      {
+        "name": "Sortudo",
+        "description": "Quando você rolar um 1 natural em uma rolagem de ataque, teste de habilidade ou teste de resistência, você pode rolar novamente o dado e deve usar a nova rolagem."
+      },
+      {
+        "name": "Bravura",
+        "description": "Você tem vantagem em testes de resistência contra ser amedrontado."
+      },
+      {
+        "name": "Agilidade Halfling",
+        "description": "Você pode mover-se através do espaço de qualquer criatura que for de um tamanho maior que o seu."
+      }
+    ],
+    "languages": ["Comum", "Halfling"]
+  },
+  {
+    "id": "dragonborn",
+    "name": "Draconato",
+    "description": "Nascidos de dragões, como seu nome proclama, os draconatos caminham orgulhosamente através de um mundo que os recebe com incompreensão temerosa.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityScoreIncrease": {
+      "strength": 2,
+      "charisma": 1
+    },
+    "traits": [
+      {
+        "name": "Ancestralidade Dracônica",
+        "description": "Você tem ancestralidade dracônica. Escolha um tipo de dragão da tabela de Ancestralidade Dracônica. Sua arma de sopro e resistência a dano são determinadas pelo tipo de dragão."
+      },
+      {
+        "name": "Arma de Sopro",
+        "description": "Você pode usar sua ação para exalar energia destrutiva. Quando você usa sua arma de sopro, cada criatura na área da exalação deve fazer um teste de resistência."
+      },
+      {
+        "name": "Resistência a Dano",
+        "description": "Você tem resistência ao tipo de dano associado à sua ancestralidade dracônica."
+      }
+    ],
+    "languages": ["Comum", "Dracônico"]
+  },
+  {
+    "id": "gnome",
+    "name": "Gnomo",
+    "description": "Um zumbido constante de atividade permeia as tocas e bairros onde os gnomos formam suas comunidades unidas. Sons mais altos pontuam o zumbido: um ranger de engrenagens moendo aqui, uma pequena explosão ali.",
+    "size": "Pequeno",
+    "speed": 7.5,
+    "abilityScoreIncrease": {
+      "intelligence": 2
+    },
+    "traits": [
+      {
+        "name": "Visão no Escuro",
+        "description": "Você pode ver no escuro a até 18 metros como se fosse luz fraca, e na luz fraca como se fosse luz plena."
+      },
+      {
+        "name": "Esperteza Gnômica",
+        "description": "Você tem vantagem em todos os testes de resistência de Inteligência, Sabedoria e Carisma contra magia."
+      }
+    ],
+    "languages": ["Comum", "Gnômico"]
+  },
+  {
+    "id": "half-elf",
+    "name": "Meio-elfo",
+    "description": "Caminhando em dois mundos, mas não pertencendo verdadeiramente a nenhum, os meio-elfos combinam o que alguns dizem serem as melhores qualidades de seus pais elfos e humanos.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityScoreIncrease": {
+      "charisma": 2
+    },
+    "traits": [
+      {
+        "name": "Visão no Escuro",
+        "description": "Você pode ver no escuro a até 18 metros como se fosse luz fraca, e na luz fraca como se fosse luz plena."
+      },
+      {
+        "name": "Ancestralidade Feérica",
+        "description": "Você tem vantagem em testes de resistência contra ser enfeitiçado e magia não pode colocá-lo para dormir."
+      },
+      {
+        "name": "Versatilidade em Perícias",
+        "description": "Você ganha proficiência em duas perícias à sua escolha."
+      }
+    ],
+    "languages": ["Comum", "Élfico"]
+  },
+  {
+    "id": "half-orc",
+    "name": "Meio-orc",
+    "description": "Quer unidos sob a liderança de um poderoso bruxo ou lutando depois de anos de conflito, as tribos orcs e humanas às vezes formam alianças, unindo forças em uma vasta horda.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityScoreIncrease": {
+      "strength": 2,
+      "constitution": 1
+    },
+    "traits": [
+      {
+        "name": "Visão no Escuro",
+        "description": "Você pode ver no escuro a até 18 metros como se fosse luz fraca, e na luz fraca como se fosse luz plena."
+      },
+      {
+        "name": "Resistência Implacável",
+        "description": "Quando você é reduzido a 0 pontos de vida mas não morto, você pode voltar a 1 ponto de vida. Você não pode usar essa característica novamente até terminar um descanso longo."
+      },
+      {
+        "name": "Ataques Selvagens",
+        "description": "Quando você marca um acerto crítico com um ataque corpo a corpo com arma, você pode rolar um dos dados de dano da arma uma vez adicional e adicioná-lo ao dano extra do acerto crítico."
+      }
+    ],
+    "languages": ["Comum", "Orc"]
+  },
+  {
+    "id": "tiefling",
+    "name": "Tiefling",
+    "description": "Ser recebido com olhares e sussurros, sofrer violência e insultos na rua, ver desconfiança e medo nos olhos de cada pessoa que encontra; esta é a sorte do tiefling.",
+    "size": "Médio",
+    "speed": 9,
+    "abilityScoreIncrease": {
+      "intelligence": 1,
+      "charisma": 2
+    },
+    "traits": [
+      {
+        "name": "Visão no Escuro",
+        "description": "Você pode ver no escuro a até 18 metros como se fosse luz fraca, e na luz fraca como se fosse luz plena."
+      },
+      {
+        "name": "Resistência Infernal",
+        "description": "Você tem resistência a dano de fogo."
+      },
+      {
+        "name": "Legado Infernal",
+        "description": "Você conhece o truque taumaturgia. Quando você alcança o 3º nível, você pode conjurar a magia repreensão infernal como uma magia de 2º nível uma vez com essa característica."
+      }
+    ],
+    "languages": ["Comum", "Infernal"]
+  }
+]
