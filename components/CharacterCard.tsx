@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Platform } from 'react-native';
 import { Character } from '@/types/database';
-import { User, Heart, Zap, Share2, CreditCard as Edit } from 'lucide-react-native';
+import { User, Heart, Zap, Share2, Edit, Trash2 } from 'lucide-react-native';
 import { router } from 'expo-router';
 
 interface CharacterCardProps {
   character: Character;
   onPress?: () => void;
   onShare?: () => void;
+  onDelete?: (characterId: string) => void;
 }
 
-export function CharacterCard({ character, onPress, onShare }: CharacterCardProps) {
+export function CharacterCard({ character, onPress, onShare, onDelete }: CharacterCardProps) {
   const hpPercentage = (character.hp_current / character.hp_max) * 100;
   
   const getHpColor = (percentage: number) => {
@@ -22,6 +23,35 @@ export function CharacterCard({ character, onPress, onShare }: CharacterCardProp
 
   const handleEdit = () => {
     router.push(`/characters/edit/${character.id}`);
+  };
+
+  const handleDelete = () => {
+    const confirmMessage = `Tem certeza que deseja excluir o personagem "${character.name}"? Esta ação não pode ser desfeita.`;
+    
+    const performDelete = () => {
+      if (onDelete) {
+        onDelete(character.id);
+      }
+    };
+
+    if (Platform.OS === 'web') {
+      if (confirm(`Excluir Personagem: ${confirmMessage}`)) {
+        performDelete();
+      }
+    } else {
+      Alert.alert(
+        'Excluir Personagem',
+        confirmMessage,
+        [
+          { text: 'Cancelar', style: 'cancel' },
+          { 
+            text: 'Excluir', 
+            style: 'destructive',
+            onPress: performDelete
+          }
+        ]
+      );
+    }
   };
 
   return (
@@ -44,6 +74,14 @@ export function CharacterCard({ character, onPress, onShare }: CharacterCardProp
             activeOpacity={0.7}
           >
             <Edit size={18} color="#666" />
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={[styles.actionButton, styles.deleteButton]} 
+            onPress={handleDelete}
+            activeOpacity={0.7}
+          >
+            <Trash2 size={18} color="#E74C3C" />
           </TouchableOpacity>
           
           {onShare && (
@@ -156,6 +194,15 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     backgroundColor: '#F8F9FA',
+    minWidth: 36,
+    minHeight: 36,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteButton: {
+    backgroundColor: '#FFF5F5',
+    borderWidth: 1,
+    borderColor: '#FECACA',
   },
   statsContainer: {
     flexDirection: 'row',

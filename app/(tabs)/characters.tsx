@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Alert, Platform } from 'react-native';
 import { Character } from '@/types/database';
 import { Spell } from '@/types/spell';
 import { DnDClass } from '@/types/dndClass';
@@ -72,6 +72,69 @@ export default function CharactersTab() {
   const handleRefresh = async () => {
     setRefreshing(true);
     await loadCharacters();
+  };
+
+  const handleDeleteCharacter = async (characterId: string) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        const message = 'Você precisa estar autenticado para excluir personagens.';
+        if (Platform.OS === 'web') {
+          alert(`Erro: ${message}`);
+        } else {
+          Alert.alert('Erro', message);
+        }
+        return;
+      }
+
+      console.log('🗑️ Deleting character with ID:', characterId);
+
+      const response = await fetch(`/api/characters/${characterId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (response.ok) {
+        console.log('✅ Character deleted successfully');
+        
+        // Remove character from local state
+        setCharacters(prev => prev.filter(char => char.id !== characterId));
+        
+        // Close modal if the deleted character was selected
+        if (selectedCharacter?.id === characterId) {
+          setSelectedCharacter(null);
+        }
+        
+        const message = 'Personagem excluído com sucesso!';
+        if (Platform.OS === 'web') {
+          alert(`Sucesso: ${message}`);
+        } else {
+          Alert.alert('Sucesso', message);
+        }
+      } else {
+        const errorText = await response.text();
+        console.error('❌ Failed to delete character:', errorText);
+        
+        const message = 'Não foi possível excluir o personagem. Tente novamente.';
+        if (Platform.OS === 'web') {
+          alert(`Erro: ${message}`);
+        } else {
+          Alert.alert('Erro', message);
+        }
+      }
+    } catch (error) {
+      console.error('💥 Error deleting character:', error);
+      
+      const message = 'Erro inesperado ao excluir personagem.';
+      if (Platform.OS === 'web') {
+        alert(`Erro: ${message}`);
+      } else {
+        Alert.alert('Erro', message);
+      }
+    }
   };
 
   const handleGenerateToken = async (characterId: string): Promise<{ share_token: string; expires_at: string }> => {
@@ -160,7 +223,12 @@ export default function CharactersTab() {
 
   const handleAddSpellsToGrimoire = async (spells: Spell[]) => {
     if (!spellSelectionCharacter) {
-      Alert.alert('Erro', 'Nenhum personagem selecionado.');
+      const message = 'Nenhum personagem selecionado.';
+      if (Platform.OS === 'web') {
+        alert(`Erro: ${message}`);
+      } else {
+        Alert.alert('Erro', message);
+      }
       return;
     }
 
@@ -168,7 +236,12 @@ export default function CharactersTab() {
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
-        Alert.alert('Erro', 'Você precisa estar autenticado.');
+        const message = 'Você precisa estar autenticado.';
+        if (Platform.OS === 'web') {
+          alert(`Erro: ${message}`);
+        } else {
+          Alert.alert('Erro', message);
+        }
         return;
       }
 
@@ -186,7 +259,12 @@ export default function CharactersTab() {
       );
 
       if (newSpells.length === 0) {
-        Alert.alert('Aviso', 'Todas as magias selecionadas já estão no grimório do personagem.');
+        const message = 'Todas as magias selecionadas já estão no grimório do personagem.';
+        if (Platform.OS === 'web') {
+          alert(`Aviso: ${message}`);
+        } else {
+          Alert.alert('Aviso', message);
+        }
         return;
       }
 
@@ -224,18 +302,32 @@ export default function CharactersTab() {
           setSelectedCharacter(updatedCharacter);
         }
         
-        Alert.alert(
-          'Sucesso', 
-          `${newSpells.length} magia(s) adicionada(s) ao grimório de ${spellSelectionCharacter.name}!`
-        );
+        const message = `${newSpells.length} magia(s) adicionada(s) ao grimório de ${spellSelectionCharacter.name}!`;
+        if (Platform.OS === 'web') {
+          alert(`Sucesso: ${message}`);
+        } else {
+          Alert.alert('Sucesso', message);
+        }
       } else {
         const errorText = await response.text();
         console.error('Error updating character:', errorText);
-        Alert.alert('Erro', 'Não foi possível adicionar as magias ao grimório.');
+        
+        const message = 'Não foi possível adicionar as magias ao grimório.';
+        if (Platform.OS === 'web') {
+          alert(`Erro: ${message}`);
+        } else {
+          Alert.alert('Erro', message);
+        }
       }
     } catch (error) {
       console.error('Error adding spells to grimoire:', error);
-      Alert.alert('Erro', 'Erro ao adicionar magias ao grimório.');
+      
+      const message = 'Erro ao adicionar magias ao grimório.';
+      if (Platform.OS === 'web') {
+        alert(`Erro: ${message}`);
+      } else {
+        Alert.alert('Erro', message);
+      }
     }
   };
 
@@ -252,7 +344,12 @@ export default function CharactersTab() {
       
       if (!session) {
         console.log('❌ No session found');
-        Alert.alert('Erro', 'Você precisa estar autenticado para criar personagens.');
+        const message = 'Você precisa estar autenticado para criar personagens.';
+        if (Platform.OS === 'web') {
+          alert(`Erro: ${message}`);
+        } else {
+          Alert.alert('Erro', message);
+        }
         return;
       }
 
@@ -309,15 +406,33 @@ export default function CharactersTab() {
         const newCharacter = await response.json();
         console.log('✅ Character created successfully:', newCharacter.name);
         setCharacters(prev => [newCharacter, ...prev]);
-        Alert.alert('Sucesso', 'Personagem de exemplo criado!');
+        
+        const message = 'Personagem de exemplo criado!';
+        if (Platform.OS === 'web') {
+          alert(`Sucesso: ${message}`);
+        } else {
+          Alert.alert('Sucesso', message);
+        }
       } else {
         const errorText = await response.text();
         console.log('❌ API Error response:', errorText);
-        Alert.alert('Erro', 'Não foi possível criar o personagem.');
+        
+        const message = 'Não foi possível criar o personagem.';
+        if (Platform.OS === 'web') {
+          alert(`Erro: ${message}`);
+        } else {
+          Alert.alert('Erro', message);
+        }
       }
     } catch (error) {
       console.error('💥 Error creating character:', error);
-      Alert.alert('Erro', 'Erro ao criar personagem.');
+      
+      const message = 'Erro ao criar personagem.';
+      if (Platform.OS === 'web') {
+        alert(`Erro: ${message}`);
+      } else {
+        Alert.alert('Erro', message);
+      }
     }
   };
 
@@ -327,7 +442,13 @@ export default function CharactersTab() {
       router.push('/characters/classes');
     } catch (error) {
       console.error('💥 Error navigating to classes:', error);
-      Alert.alert('Erro', 'Não foi possível navegar para a página de classes.');
+      
+      const message = 'Não foi possível navegar para a página de classes.';
+      if (Platform.OS === 'web') {
+        alert(`Erro: ${message}`);
+      } else {
+        Alert.alert('Erro', message);
+      }
     }
   };
 
@@ -341,7 +462,13 @@ export default function CharactersTab() {
       console.log('✅ Navigation command executed');
     } catch (error) {
       console.error('💥 Error navigating to create character:', error);
-      Alert.alert('Erro', 'Não foi possível navegar para a criação de personagem.');
+      
+      const message = 'Não foi possível navegar para a criação de personagem.';
+      if (Platform.OS === 'web') {
+        alert(`Erro: ${message}`);
+      } else {
+        Alert.alert('Erro', message);
+      }
     }
   };
 
@@ -424,6 +551,7 @@ export default function CharactersTab() {
                     character={character}
                     onPress={() => setSelectedCharacter(character)}
                     onShare={() => setSelectedCharacter(character)}
+                    onDelete={handleDeleteCharacter}
                   />
                   
                   {/* Botão para adicionar magias ao grimório */}
@@ -473,6 +601,7 @@ export default function CharactersTab() {
         onClose={() => setSelectedCharacter(null)}
         onGenerateToken={handleGenerateToken}
         onRevokeToken={handleRevokeToken}
+        onDelete={handleDeleteCharacter}
       />
 
       <SpellSelectionModal

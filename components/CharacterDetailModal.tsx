@@ -10,9 +10,10 @@ import {
   Alert,
   Share,
   Clipboard,
+  Platform,
 } from 'react-native';
 import { Character } from '@/types/database';
-import { X, User, Heart, Zap, Share2, Copy, Shield, Sword, Clock, Eye, EyeOff, CreditCard as Edit, BookOpen } from 'lucide-react-native';
+import { X, User, Heart, Zap, Share2, Copy, Shield, Sword, Clock, Eye, EyeOff, Edit, BookOpen, Trash2 } from 'lucide-react-native';
 import { router } from 'expo-router';
 
 interface CharacterDetailModalProps {
@@ -21,6 +22,7 @@ interface CharacterDetailModalProps {
   onClose: () => void;
   onGenerateToken?: (characterId: string) => Promise<{ share_token: string; expires_at: string }>;
   onRevokeToken?: (characterId: string) => Promise<void>;
+  onDelete?: (characterId: string) => void;
 }
 
 export function CharacterDetailModal({ 
@@ -28,7 +30,8 @@ export function CharacterDetailModal({
   visible, 
   onClose, 
   onGenerateToken,
-  onRevokeToken 
+  onRevokeToken,
+  onDelete
 }: CharacterDetailModalProps) {
   const [showToken, setShowToken] = useState(false);
   const [isGeneratingToken, setIsGeneratingToken] = useState(false);
@@ -40,19 +43,56 @@ export function CharacterDetailModal({
     router.push(`/characters/edit/${character.id}`);
   };
 
+  const handleDelete = () => {
+    const confirmMessage = `Tem certeza que deseja excluir o personagem "${character.name}"? Esta ação não pode ser desfeita.`;
+    
+    const performDelete = () => {
+      if (onDelete) {
+        onDelete(character.id);
+        onClose();
+      }
+    };
+
+    if (Platform.OS === 'web') {
+      if (confirm(`Excluir Personagem: ${confirmMessage}`)) {
+        performDelete();
+      }
+    } else {
+      Alert.alert(
+        'Excluir Personagem',
+        confirmMessage,
+        [
+          { text: 'Cancelar', style: 'cancel' },
+          { 
+            text: 'Excluir', 
+            style: 'destructive',
+            onPress: performDelete
+          }
+        ]
+      );
+    }
+  };
+
   const handleGenerateToken = async () => {
     if (!onGenerateToken) return;
     
     setIsGeneratingToken(true);
     try {
       const result = await onGenerateToken(character.id);
-      Alert.alert(
-        'Token Gerado',
-        'Token de compartilhamento gerado com sucesso! Você pode compartilhá-lo com seu DM.',
-        [{ text: 'OK' }]
-      );
+      const message = 'Token de compartilhamento gerado com sucesso! Você pode compartilhá-lo com seu DM.';
+      
+      if (Platform.OS === 'web') {
+        alert(`Token Gerado: ${message}`);
+      } else {
+        Alert.alert('Token Gerado', message, [{ text: 'OK' }]);
+      }
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível gerar o token de compartilhamento.');
+      const errorMessage = 'Não foi possível gerar o token de compartilhamento.';
+      if (Platform.OS === 'web') {
+        alert(`Erro: ${errorMessage}`);
+      } else {
+        Alert.alert('Erro', errorMessage);
+      }
     } finally {
       setIsGeneratingToken(false);
     }
@@ -61,31 +101,56 @@ export function CharacterDetailModal({
   const handleRevokeToken = async () => {
     if (!onRevokeToken) return;
 
-    Alert.alert(
-      'Revogar Token',
-      'Tem certeza que deseja revogar o token de compartilhamento? O DM não conseguirá mais acessar este personagem.',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Revogar',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await onRevokeToken(character.id);
-              Alert.alert('Token Revogado', 'O token de compartilhamento foi revogado.');
-            } catch (error) {
-              Alert.alert('Erro', 'Não foi possível revogar o token.');
-            }
-          }
+    const confirmMessage = 'Tem certeza que deseja revogar o token de compartilhamento? O DM não conseguirá mais acessar este personagem.';
+    
+    const performRevoke = async () => {
+      try {
+        await onRevokeToken(character.id);
+        const message = 'O token de compartilhamento foi revogado.';
+        if (Platform.OS === 'web') {
+          alert(`Token Revogado: ${message}`);
+        } else {
+          Alert.alert('Token Revogado', message);
         }
-      ]
-    );
+      } catch (error) {
+        const errorMessage = 'Não foi possível revogar o token.';
+        if (Platform.OS === 'web') {
+          alert(`Erro: ${errorMessage}`);
+        } else {
+          Alert.alert('Erro', errorMessage);
+        }
+      }
+    };
+
+    if (Platform.OS === 'web') {
+      if (confirm(`Revogar Token: ${confirmMessage}`)) {
+        performRevoke();
+      }
+    } else {
+      Alert.alert(
+        'Revogar Token',
+        confirmMessage,
+        [
+          { text: 'Cancelar', style: 'cancel' },
+          {
+            text: 'Revogar',
+            style: 'destructive',
+            onPress: performRevoke
+          }
+        ]
+      );
+    }
   };
 
   const copyTokenToClipboard = () => {
     if (character.share_token) {
       Clipboard.setString(character.share_token);
-      Alert.alert('Copiado', 'Token copiado para a área de transferência!');
+      const message = 'Token copiado para a área de transferência!';
+      if (Platform.OS === 'web') {
+        alert(`Copiado: ${message}`);
+      } else {
+        Alert.alert('Copiado', message);
+      }
     }
   };
 
@@ -140,6 +205,9 @@ export function CharacterDetailModal({
             <View style={styles.headerActions}>
               <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
                 <Edit size={20} color="#FFFFFF" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
+                <Trash2 size={20} color="#FFFFFF" />
               </TouchableOpacity>
               <TouchableOpacity style={styles.closeButton} onPress={onClose}>
                 <X size={24} color="#FFFFFF" />
@@ -393,6 +461,11 @@ const styles = StyleSheet.create({
   editButton: {
     padding: 8,
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 8,
+  },
+  deleteButton: {
+    padding: 8,
+    backgroundColor: '#E74C3C',
     borderRadius: 8,
   },
   closeButton: {
