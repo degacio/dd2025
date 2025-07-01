@@ -118,12 +118,17 @@ export default function CharactersTab() {
 
       console.log('🗑️ Deleting character with ID:', characterId);
 
-      const response = await fetch(`/api/characters/${characterId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`,
-        },
-      });
+      const { error } = await supabase
+  .from('characters')
+  .delete()
+  .eq('id', characterId)
+  .eq('user_id', user.id); // opcional, depende da RLS
+
+if (error) {
+  console.error('❌ Erro ao deletar personagem:', error.message);
+  Alert.alert('Erro', 'Não foi possível excluir o personagem.');
+  return;
+}
 
       if (response.ok) {
         console.log('✅ Character deleted successfully');
