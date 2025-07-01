@@ -102,6 +102,85 @@ export default function CharactersTab() {
     }
   };
 
+const createSampleCharacter = async () => {
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      const message = 'Você precisa estar autenticado para criar personagens.';
+      Platform.OS === 'web'
+        ? alert(`Erro: ${message}`)
+        : Alert.alert('Erro', message);
+      return;
+    }
+
+    const sampleCharacter = {
+      name: 'Gandalf o Cinzento',
+      class_name: 'Mago',
+      level: 10,
+      hp_current: 68,
+      hp_max: 78,
+      spell_slots: {
+        1: [4, 4],
+        2: [3, 3],
+        3: [3, 3],
+        4: [3, 3],
+        5: [2, 2]
+      },
+      spells_known: [
+        { name: 'Bola de Fogo', level: 3 },
+        { name: 'Mísseis Mágicos', level: 1 },
+        { name: 'Escudo', level: 1 },
+        { name: 'Raio', level: 3 },
+        { name: 'Voo', level: 3 }
+      ],
+      character_data: {
+        race: 'Humano',
+        background: 'Sábio',
+        alignment: 'Neutro e Bom',
+        stats: {
+          strength: 10,
+          dexterity: 13,
+          constitution: 16,
+          intelligence: 20,
+          wisdom: 15,
+          charisma: 16
+        }
+      }
+    };
+
+    const response = await fetch('/api/characters', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(sampleCharacter),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ Erro na API:', errorText);
+      const msg = 'Não foi possível criar o personagem.';
+      Platform.OS === 'web' ? alert(`Erro: ${msg}`) : Alert.alert('Erro', msg);
+      return;
+    }
+
+    const newCharacter = await response.json();
+    setCharacters(prev => [newCharacter, ...prev]);
+
+    const msg = 'Personagem de exemplo criado!';
+    Platform.OS === 'web' ? alert(`Sucesso: ${msg}`) : Alert.alert('Sucesso', msg);
+
+    await loadCharacters();
+  } catch (error) {
+    console.error('💥 Erro ao criar personagem:', error);
+    const msg = 'Erro ao criar personagem.';
+    Platform.OS === 'web' ? alert(`Erro: ${msg}`) : Alert.alert('Erro', msg);
+  }
+};
+
+  
   const handleRefresh = async () => {
     setRefreshing(true);
     await loadCharacters();
